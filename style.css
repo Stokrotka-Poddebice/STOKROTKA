@@ -411,3 +411,96 @@ input, textarea {
         width: 100%;
     }
 }
+
+.map-section {
+    padding: 60px 0 0 0; /* Górny padding, dół na 0, by stykało się ze stopką */
+    text-align: center;
+    background-color: var(--white);
+}
+
+.map-section h2 {
+    margin-bottom: 30px;
+    color: var(--primary-green);
+}
+
+.map-container {
+    width: 100%;
+    line-height: 0; /* Usuwa małą szczelinę pod mapą */
+    filter: grayscale(20%); /* Subtelny efekt dla lepszego dopasowania do stylu strony */
+    transition: filter 0.3s ease;
+}
+
+.map-container:hover {
+    filter: grayscale(0%);
+}
+
+.main-footer {
+    background-color: #2d3436; /* Ciemny antracyt dla kontrastu */
+    color: #f1f1f1;
+    padding: 60px 20px 20px;
+    font-size: 0.9rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.footer-col h4 {
+    color: var(--primary-green); /* Używamy Twojej zieleni z logo */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-col a:hover {
+    color: white;
+}
+
+.footer-logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+    filter: brightness(0) invert(1); /* Zmienia logo na białe, by pasowało do ciemnego tła */
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-bottom {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    text-align: center;
+    color: #7f8c8d;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .footer-container {
+        text-align: center;
+    }
+    .social-links {
+        align-items: center;
+    }
+}

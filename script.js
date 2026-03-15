@@ -1,35 +1,71 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contact-form');
-    const formStatus = document.getElementById('form-status');
+// --- 1. BAZA DANYCH PRODUKTÓW ---
+const produkty = {
+    'letnie-harmonie': {
+        nazwa: 'Bukiet "Letnie Harmonie"',
+        cena: 210,
+        opis: 'Romantyczna kompozycja różowych goździków i eukaliptusa. Idealna na każdą okazję.',
+        img: 'assets/bukiet1.jpg'
+    },
+    'dziki-ogrod': {
+        nazwa: 'Kompozycja "Dziki Ogród"',
+        cena: 180,
+        opis: 'Naturalny bukiet z rumiankiem w szklanym wazonie, przywołujący wspomnienie lata.',
+        img: 'assets/bukiet2.jpg'
+    },
+    'alokazja': {
+        nazwa: 'Roślina "Alokazja"',
+        cena: 110,
+        opis: 'Egzotyczna roślina doniczkowa o głębokich zielonych liściach. Wyjątkowa ozdoba wnętrza.',
+        img: 'assets/bukiet3.jpg'
+    }
+};
 
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Zatrzymuje przeładowanie strony
+// --- 2. LOGIKA KOSZYKA ---
+let cart = JSON.parse(localStorage.getItem('stokrotkaCart')) || [];
 
-        // Pobieranie wartości (możesz je później wysłać do API)
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
+function updateCartUI() {
+    const cartCount = document.getElementById('cart-count');
+    const cartList = document.getElementById('cart-items-list');
+    const cartTotal = document.getElementById('cart-total');
+    
+    // Aktualizacja licznika
+    cartCount.innerText = cart.length;
+    
+    // Czyszczenie listy
+    cartList.innerHTML = '';
+    let total = 0;
 
-        // Stylizacja statusu "w trakcie"
-        formStatus.style.color = "#6B8E63";
-        formStatus.textContent = "Wysyłanie wiadomości...";
-
-        // Symulacja wysyłki (np. do serwera)
-        setTimeout(() => {
-            formStatus.textContent = `Dziękujemy ${name}! Twoja wiadomość została wysłana pomyślnie.`;
-            formStatus.style.color = "green";
-            
-            // Czyszczenie pól formularza
-            contactForm.reset();
-        }, 1500);
+    cart.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${item.nazwa} - ${item.cena} PLN <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer;">[x]</button>`;
+        cartList.appendChild(li);
+        total += item.cena;
     });
-});
-// Znajdź elementy
+
+    cartTotal.innerText = total;
+    localStorage.setItem('stokrotkaCart', JSON.stringify(cart));
+}
+
+function addToCart(productId) {
+    const produkt = produkty[productId];
+    if (produkt) {
+        cart.push(produkt);
+        updateCartUI();
+        // Opcjonalnie: otwórz koszyk po dodaniu
+        document.getElementById('cart-dropdown').classList.remove('hidden');
+    }
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+}
+
+// --- 3. OBSŁUGA GALERII (LIGHTBOX) ---
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const captionText = document.getElementById('caption');
-const closeBtn = document.querySelector('.close-lightbox');
 
-// Obsługa kliknięcia w zdjęcie w galerii
 document.querySelectorAll('.gallery-item').forEach(image => {
     image.addEventListener('click', () => {
         lightbox.style.display = 'flex';
@@ -38,66 +74,38 @@ document.querySelectorAll('.gallery-item').forEach(image => {
     });
 });
 
-// Zamykanie po kliknięciu w "X"
-closeBtn.onclick = () => {
+document.querySelector('.close-lightbox')?.addEventListener('click', () => {
     lightbox.style.display = 'none';
-};
-
-// Zamykanie po kliknięciu poza zdjęciem
-lightbox.onclick = (e) => {
-    if (e.target !== lightboxImg) {
-        lightbox.style.display = 'none';
-    }
-};
-let cart = JSON.parse(localStorage.getItem('stokrotka-cart')) || [];
-
-function updateCartUI() {
-    const list = document.getElementById('cart-items-list');
-    const count = document.getElementById('cart-count');
-    const total = document.getElementById('cart-total');
-    
-    list.innerHTML = '';
-    let totalPrice = 0;
-
-    cart.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.className = 'cart-item';
-        li.innerHTML = `${item.name} - ${item.price} PLN <button onclick="removeItem(${index})">❌</button>`;
-        list.appendChild(li);
-        totalPrice += item.price;
-    });
-
-    count.innerText = cart.length;
-    total.innerText = totalPrice;
-    localStorage.setItem('stokrotka-cart', JSON.stringify(cart));
-}
-
-function addToCart(name, price) {
-    cart.push({ name, price });
-    updateCartUI();
-    alert('Dodano do koszyka!');
-}
-
-function removeItem(index) {
-    cart.splice(index, 1);
-    updateCartUI();
-}
-
-// Obsługa przycisków na stronie
-document.querySelectorAll('.btn-add, .btn-main-large').forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Pobieramy dane z karty produktu (uproszczone)
-        const name = btn.parentElement.querySelector('h1, h3').innerText;
-        const priceStr = btn.parentElement.querySelector('.price, .price-big').innerText;
-        const price = parseInt(priceStr.replace(/[^\d]/g, ''));
-        addToCart(name, price);
-    });
 });
 
-// Pokazywanie koszyka
-document.getElementById('cart-button').onclick = () => {
-    document.getElementById('cart-dropdown').classList.toggle('hidden');
-};
+// --- 4. INICJALIZACJA I EVENTY ---
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartUI();
 
-// Inicjalizacja przy starcie
-updateCartUI();
+    // Toggle koszyka
+    const cartButton = document.getElementById('cart-button');
+    const cartDropdown = document.getElementById('cart-dropdown');
+    
+    cartButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cartDropdown.classList.toggle('hidden');
+    });
+
+    // Zamykanie koszyka po kliknięciu poza nim
+    window.addEventListener('click', () => {
+        cartDropdown.classList.add('hidden');
+    });
+
+    cartDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+    // Podpięcie przycisków "Dodaj do koszyka" na stronie głównej
+    // Zakładamy, że przyciski są w tej samej kolejności co w HTML
+    const addButtons = document.querySelectorAll('.btn-add');
+    const productKeys = Object.keys(produkty);
+
+    addButtons.forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+            addToCart(productKeys[index]);
+        });
+    });
+});

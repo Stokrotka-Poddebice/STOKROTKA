@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kwiaciarnia Stokrotka - Twoja Kwiaciarnia</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -47,33 +46,39 @@
     <h2>Nasze Bestsellery</h2>
     <div class="product-grid">
         <div class="product-card">
-            <img src="assets/bukiet1.jpg" alt="Bukiet Letnie Harmonie">
-            <h3>Bukiet "Letnie Harmonie"</h3>
-            <p class="price">210 PLN</p>
-            <button class="btn-add">DODAJ DO KOSZYKA</button>
-        </div>
+    <a href="produkt.html?id=letnie-harmonie" style="text-decoration: none; color: inherit;">
+        <img src="assets/bukiet1.jpg" alt="Romantyczny bukiet Letnie Harmonie...">
+        <h3>Bukiet "Letnie Harmonie"</h3>
+    </a>
+    <p class="price">210 PLN</p>
+    <button class="btn-add">DODAJ DO KOSZYKA</button>
+</div>
         <div class="product-card">
-            <img src="assets/bukiet2.jpg" alt="Kompozycja Dziki Ogród">
-            <h3>Kompozycja "Dziki Ogród"</h3>
-            <p class="price">180 PLN</p>
-            <button class="btn-add">DODAJ DO KOSZYKA</button>
-        </div>
+    <a href="produkt.html?id=dziki-ogrod" style="text-decoration: none; color: inherit;">
+        <img src="assets/bukiet2.jpg" alt="Naturalna kompozycja polna Dziki Ogród...">
+        <h3>Kompozycja "Dziki Ogród"</h3>
+    </a>
+    <p class="price">180 PLN</p>
+    <button class="btn-add">DODAJ DO KOSZYKA</button>
+</div>
         <div class="product-card">
-            <img src="assets/bukiet3.jpg" alt="Alokazja">
-            <h3>Roślina doniczkowa "Alokazja"</h3>
-            <p class="price">110 PLN</p>
-            <button class="btn-add">DODAJ DO KOSZYKA</button>
-        </div>
-    </div>
+    <a href="produkt.html?id=rosina-alokazja" style="text-decoration: none; color: inherit;">
+        <img src="assets/bukiet3.jpg" alt="Egzotyczna roślina doniczkowa Alokazja...">
+        <h3>Roślina "Alokazja"</h3>
+    </a>
+    <p class="price">110 PLN</p>
+    <button class="btn-add">DODAJ DO KOSZYKA</button>
+</div>
 </section>
 
 <section id="galeria" class="gallery-section">
     <h2>Nasze Kompozycje</h2>
     <div class="gallery-grid">
-        <img src="assets/img1.jpg" alt="Bukiet ślubny" class="gallery-item">
-        <img src="assets/img2.jpg" alt="Kompozycja w wazonie" class="gallery-item">
-        <img src="assets/img3.jpg" alt="Dekoracja stołu" class="gallery-item">
-        <img src="assets/img4.jpg" alt="Wieniec wiosenny" class="gallery-item">
+        <img src="assets/img1.jpg" alt="Rustykalny bukiet ślubny z lawendą i kłosami zbóż – styl boho." class="gallery-item">
+        <img src="assets/img2.jpg" alt="Elegancki kosz prezentowy pełen pastelowych róż i sezonowych dodatków." class="gallery-item">
+        <img src="assets/img3.jpg" alt="Subtelna dekoracja stołu z gipsówki i polnych kwiatów – lekkość i wdzięk." class="gallery-item">
+        <img src="assets/img4.jpg" alt="Błękitna fantazja – kompozycja z ostróżką i margerytkami." class="gallery-item">
+        <img src="assets/img5.jpg" alt="Zbliżenie na detale: świeżość naszych stokrotek prosto od dostawców." class="gallery-item">
     </div>
 </section>
 
@@ -119,18 +124,68 @@
     <p>Masz pytania? Napisz do nas!</p>
     
     <form id="contact-form">
-        <input type="text" id="name" placeholder="Imię" required>
-        <input type="email" id="email" placeholder="Email" required>
+<input type="text" name="name" id="name" placeholder="Imię" required>
+<input type="email" name="_replyto" id="email" placeholder="Email" required>
         <textarea id="message" placeholder="Twoja wiadomość" required></textarea>
         <button type="submit" class="btn-main">Wyślij wiadomość</button>
         <p id="form-status" style="margin-top: 15px; font-weight: bold;"></p>
     </form>
 </section>
-
+<section id="mapa" class="map-section">
+    <h2>Znajdź nas w Krakowie</h2>
+    <div class="map-container">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2561.4253131776!2d19.9372163157169!3d50.061433979423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47165b120367341b%3A0x67394d21620e28f7!2sRynek%20G%C5%82%C3%B3wny%2C%20Krak%C3%B3w!5e0!3m2!1spl!2spl!4v1700000000000!5m2!1spl!2spl" 
+            width="100%" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</section>
 <script src="script.js"></script>
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-col">
+            <img src="assets/logo.png" alt="Stokrotka Logo" class="footer-logo">
+            <p>Tworzymy emocje ubrane w kwiaty. Twoja lokalna kwiaciarnia w Krakowie od 1990 roku.</p>
+        </div>
 
-<footer>
-    <p>&copy; 2026 Kwiaciarnia Stokrotka. Wszystkie prawa zastrzeżone.</p>
+        <div class="footer-col">
+            <h4>Menu</h4>
+            <ul>
+                <li><a href="#sklep">Bukiety</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#o-nas">O nas</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Kontakt</h4>
+            <p>📍 ul. Kwiatowa 15, Kraków</p>
+            <p>📞 +48 123 456 789</p>
+            <p>✉️ kontakt@stokrotka.pl</p>
+            <div class="opening-hours">
+                <p>Pon - Pt: 9:00 - 18:00</p>
+                <p>Sob: 10:00 - 15:00</p>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Śledź nas</h4>
+            <div class="social-links">
+                <a href="#" class="social-icon">Instagram</a>
+                <a href="#" class="social-icon">Facebook</a>
+                <a href="#" class="social-icon">Pinterest</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Kwiaciarnia Stokrotka. Wszystkie prawa zastrzeżone.</p>
+    </div>
 </footer>
 
 </body>

@@ -19,32 +19,15 @@
 </header>
 
 <main class="product-page">
-    <div class="product-container">
-        <div class="product-image">
-            <img src="assets/bukiet1.jpg" alt="Bukiet Letnie Harmonie">
-        </div>
-
-        <div class="product-details">
-            <span class="category">Bestseller</span>
-            <h1>Bukiet "Letnie Harmonie"</h1>
-            <p class="price-big">210,00 PLN</p>
-            
-            <div class="description">
-                <p>Nasz flagowy bukiet skomponowany z najświeższych piwonii, eustomy oraz delikatnych dodatków zieleni. Idealny na prezent, który ma wyrazić więcej niż tysiąc słów.</p>
-                <ul>
-                    <li>Dostawa pod same drzwi w 24h</li>
-                    <li>Opcja dołączenia bileciku z dedykacją</li>
-                    <li>Gwarancja świeżości przez 7 dni</li>
-                </ul>
-            </div>
-
-            <div class="purchase-options">
-                <div class="quantity">
-                    <label for="qty">Ilość:</label>
-                    <input type="number" id="qty" value="1" min="1">
-                </div>
-                <button class="btn-main-large">DODAJ DO KOSZYKA</button>
-            </div>
+<div class="product-container">
+    <img id="dynamic-img" src="" alt="">
+    <div class="product-info">
+        <h1 id="dynamic-name">Ładowanie...</h1>
+        <p id="dynamic-price" class="price"></p>
+        <p id="dynamic-desc"></p>
+        <button class="btn-main-large">DODAJ DO KOSZYKA</button>
+    </div>
+</div>
         </div>
     </div>
 </main>
