@@ -504,3 +504,118 @@ input, textarea {
         align-items: center;
     }
 }
+
+/* Kontener główny koszyka */
+#cart {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    max-width: 400px;
+    margin: 20px auto;
+    border: 1px solid #f0f0f0;
+    font-family: 'Inter', sans-serif;
+}
+
+#cart h3 {
+    font-size: 1.4rem;
+    color: #333;
+    border-bottom: 2px solid #f8f8f8;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Lista produktów w koszyku */
+#cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#cart-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px dashed #eee;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Podsumowanie (Suma) */
+#cart p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: right;
+    margin-top: 20px;
+    color: #2c3e50;
+}
+
+#cart p span {
+    color: #e67e22; /* Akcent kolorystyczny dla ceny */
+}
+
+/* Przycisk Przejdź do kasy */
+.checkout-btn {
+    display: block;
+    width: 100%;
+    background-color: #27ae60; /* Elegancka zieleń roślinna */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    margin-top: 15px;
+}
+
+.checkout-btn:hover {
+    background-color: #219150;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+}
+
+/* Stan pustego koszyka */
+.cart-empty-msg {
+    color: #999;
+    text-align: center;
+    font-style: italic;
+    padding: 20px 0;
+}
+.product-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 50px auto;
+    gap: 40px;
+    padding: 20px;
+    align-items: center;
+}
+
+.product-image img {
+    max-width: 450px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.product-details h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.price {
+    font-size: 1.8rem;
+    color: #27ae60;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.description {
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 30px;
+}

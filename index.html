@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kwiaciarnia Stokrotka - Twoja Kwiaciarnia</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Szybka poprawka stylu koszyka, aby był widoczny po kliknięciu */
+        #cart {
+            display: none; 
+            position: absolute;
+            right: 0;
+            top: 60px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 300px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            color: #333;
+        }
+        #cart.active {
+            display: block;
+        }
+        .cart-container {
+            position: relative;
+        }
+    </style>
 </head>
 <body>
 
@@ -20,17 +43,17 @@
             <li><a href="#kontakt">Kontakt</a></li>
         </ul>
         <div class="cart-container">
-    <button id="cart-button" class="btn-cart">
-        🛒 Koszyk (<span id="cart-count">0</span>)
-    </button>
-    <div id="cart-dropdown" class="cart-dropdown hidden">
-        <h3>Twoje produkty:</h3>
-        <ul id="cart-items-list"></ul>
-        <hr>
-        <p>Suma: <span id="cart-total">0</span> PLN</p>
-        <button class="btn-main">Przejdź do kasy</button>
-    </div>
-</div>
+            <button id="cart-button" class="btn-cart">
+                🛒 Koszyk (<span id="cart-count">0</span>)
+            </button>
+            <div id="cart">
+                <h3>Twoje produkty:</h3>
+                <ul id="cart-items" style="list-style: none; padding: 0;"></ul>
+                <hr>
+                <p>Suma: <span id="cart-total">0</span> PLN</p>
+                <button class="checkout-btn" style="width: 100%; padding: 10px; background: #27ae60; color: white; border: none; cursor: pointer;">Przejdź do kasy</button>
+            </div>
+        </div>
     </nav>
 </header>
 
@@ -46,30 +69,32 @@
     <h2>Nasze Bestsellery</h2>
     <div class="product-grid">
         <div class="product-card">
-    <a href="produkt.html?id=letnie-harmonie" style="text-decoration: none; color: inherit;">
-        <img src="assets/bukiet1.jpg" alt="Romantyczny bukiet Letnie Harmonie...">
-        <h3>Bukiet "Letnie Harmonie"</h3>
-    </a>
-    <p class="price">210 PLN</p>
-    <button class="btn-add">DODAJ DO KOSZYKA</button>
-</div>
+            <a href="produkt.html?id=letnie-harmonie" style="text-decoration: none; color: inherit;">
+                <img src="assets/bukiet1.jpg" alt="Bukiet Letnie Harmonie">
+                <h3>Bukiet "Letnie Harmonie"</h3>
+            </a>
+            <p class="price">210 PLN</p>
+            <button class="btn-add" onclick="addToCartDirect('Bukiet Letnie Harmonie', 210)">DODAJ DO KOSZYKA</button>
+        </div>
         <div class="product-card">
-    <a href="produkt.html?id=dziki-ogrod" style="text-decoration: none; color: inherit;">
-        <img src="assets/bukiet2.jpg" alt="Naturalna kompozycja polna Dziki Ogród...">
-        <h3>Kompozycja "Dziki Ogród"</h3>
-    </a>
-    <p class="price">180 PLN</p>
-    <button class="btn-add">DODAJ DO KOSZYKA</button>
-</div>
+            <a href="produkt.html?id=dziki-ogrod" style="text-decoration: none; color: inherit;">
+                <img src="assets/bukiet2.jpg" alt="Kompozycja Dziki Ogród">
+                <h3>Kompozycja "Dziki Ogród"</h3>
+            </a>
+            <p class="price">180 PLN</p>
+            <button class="btn-add" onclick="addToCartDirect('Kompozycja Dziki Ogród', 180)">DODAJ DO KOSZYKA</button>
+        </div>
         <div class="product-card">
-    <a href="produkt.html?id=rosina-alokazja" style="text-decoration: none; color: inherit;">
-        <img src="assets/bukiet3.jpg" alt="Egzotyczna roślina doniczkowa Alokazja...">
-        <h3>Roślina "Alokazja"</h3>
-    </a>
-    <p class="price">110 PLN</p>
-    <button class="btn-add">DODAJ DO KOSZYKA</button>
-</div>
+            <a href="produkt.html?id=rosina-alokazja" style="text-decoration: none; color: inherit;">
+                <img src="assets/bukiet3.jpg" alt="Roślina Alokazja">
+                <h3>Roślina "Alokazja"</h3>
+            </a>
+            <p class="price">110 PLN</p>
+            <button class="btn-add" onclick="addToCartDirect('Roślina Alokazja', 110)">DODAJ DO KOSZYKA</button>
+        </div>
+    </div>
 </section>
+
 
 <section id="galeria" class="gallery-section">
     <h2>Nasze Kompozycje</h2>
@@ -98,14 +123,14 @@
                 <div class="year">1990</div>
                 <div class="event">
                     <h3>Początki</h3>
-                    <p>Wszystko zaczęło się od małego stoiska na lokalnym targu w Krakowie, gdzie pani Maria, nasza założycielka, sprzedawała pierwsze bukiety z kwiatów z własnego ogrodu.</p>
+                    <p>Wszystko zaczęło się od małego stoiska na lokalnym targu w Łodzi, gdzie pani Grażyna, nasza założycielka, sprzedawała pierwsze bukiety z kwiatów z własnego ogrodu.</p>
                 </div>
             </div>
             <div class="timeline-item">
-                <div class="year">2005</div>
+                <div class="year">1990</div>
                 <div class="event">
                     <h3>Pierwszy Lokal</h3>
-                    <p>Otworzyliśmy nasz stacjonarny butik „Stokrotka”. To tutaj zaczęliśmy tworzyć dekoracje na największe śluby i wydarzenia w regionie.</p>
+                    <p>Otworzyliśmy naszą nową siedzibę „Stokrotka”. To tutaj zaczęliśmy tworzyć dekoracje na największe wydarzenia w regionie.</p>
                 </div>
             </div>
             <div class="timeline-item">
@@ -132,10 +157,10 @@
     </form>
 </section>
 <section id="mapa" class="map-section">
-    <h2>Znajdź nas w Krakowie</h2>
+    <h2>Znajdź nas w Łodzi</h2>
     <div class="map-container">
         <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2561.4253131776!2d19.9372163157169!3d50.061433979423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47165b120367341b%3A0x67394d21620e28f7!2sRynek%20G%C5%82%C3%B3wny%2C%20Krak%C3%B3w!5e0!3m2!1spl!2spl!4v1700000000000!5m2!1spl!2spl" 
+            src="<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2954.396860896492!2d19.452086976912042!3d51.770286391464296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471bcad42459f9cb%3A0x4004ebf7dea0ea6b!2zWmllbG9uYSA2LCA5MC0wMDEgxYHDs2TFug!5e1!3m2!1spl!2spl!4v1773607418057!5m2!1spl!2spl" 
             width="100%" 
             height="450" 
             style="border:0;" 
@@ -145,12 +170,13 @@
         </iframe>
     </div>
 </section>
+
 <script src="script.js"></script>
 <footer class="main-footer">
     <div class="footer-container">
         <div class="footer-col">
             <img src="assets/logo.png" alt="Stokrotka Logo" class="footer-logo">
-            <p>Tworzymy emocje ubrane w kwiaty. Twoja lokalna kwiaciarnia w Krakowie od 1990 roku.</p>
+            <p>Tworzymy emocje ubrane w kwiaty. Twoja kwiaciarnia od 1990 roku.</p>
         </div>
 
         <div class="footer-col">
@@ -165,12 +191,12 @@
 
         <div class="footer-col">
             <h4>Kontakt</h4>
-            <p>📍 ul. Kwiatowa 15, Kraków</p>
+            <p>📍 ul. Zielona 6, Łódź</p>
             <p>📞 +48 123 456 789</p>
             <p>✉️ kontakt@stokrotka.pl</p>
             <div class="opening-hours">
-                <p>Pon - Pt: 9:00 - 18:00</p>
-                <p>Sob: 10:00 - 15:00</p>
+                <p>Pon - Pt: 9:00 - 17:00</p>
+                <p>Sob: 9:00 - 17:00</p>
             </div>
         </div>
 
@@ -184,9 +210,59 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2026 Kwiaciarnia Stokrotka. Wszystkie prawa zastrzeżone.</p>
+        <p>&copy; 2025 Kwiaciarnia Stokrotka. Wszystkie prawa zastrzeżone.</p>
     </div>
 </footer>
+<script>
+    // Funkcja, która pobiera dane z pamięci przeglądarki i rysuje koszyk
+    function displayCart() {
+        const cartItemsElement = document.getElementById('cart-items');
+        const cartTotalElement = document.getElementById('cart-total');
+        
+        // 1. Pobierz listę produktów (jeśli pusta, stwórz pustą tablicę)
+        let cart = JSON.parse(localStorage.getItem('stokrotkaCart')) || [];
+        
+        // 2. Wyczyść listę, żeby nie dublować wpisów przy odświeżaniu
+        cartItemsElement.innerHTML = '';
+        let total = 0;
 
+        // 3. Sprawdź czy koszyk nie jest pusty
+        if (cart.length === 0) {
+            cartItemsElement.innerHTML = '<li style="text-align:center; color:#999; padding:10px;">Koszyk jest pusty</li>';
+        } else {
+            // 4. Dla każdego produktu w tablicy stwórz element listy
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.style.display = "flex";
+                li.style.justifyContent = "space-between";
+                li.style.marginBottom = "10px";
+                
+                li.innerHTML = `
+                    <span>${item.name}</span>
+                    <span>
+                        <strong>${item.price} PLN</strong>
+                        <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer; margin-left:10px;">✕</button>
+                    </span>
+                `;
+                cartItemsElement.appendChild(li);
+                total += item.price;
+            });
+        }
+
+        // 5. Zaktualizuj sumę końcową
+        cartTotalElement.innerText = total;
+    }
+
+    // Funkcja usuwania pojedynczego elementu
+    function removeFromCart(index) {
+        let cart = JSON.parse(localStorage.getItem('stokrotkaCart')) || [];
+        cart.splice(index, 1); // Usuwa 1 element o wskazanym numerze
+        localStorage.setItem('stokrotkaCart', JSON.stringify(cart)); // Zapisuje zmiany
+        displayCart(); // Odświeża widok koszyka
+    }
+
+    // WAŻNE: Uruchom funkcję od razu po załadowaniu strony
+    document.addEventListener('DOMContentLoaded', displayCart);
+</script>
 </body>
 </html>

@@ -3,34 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bukiet Letnie Harmonie - Kwiaciarnia Stokrotka</title>
+    <title>Produkt - Kwiaciarnia Stokrotka</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .product-page-container {
+            max-width: 1000px;
+            margin: 120px auto 50px;
+            padding: 20px;
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        .product-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .product-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .product-price {
+            font-size: 2rem;
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .product-description {
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #e67e22;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .product-page-container {
+                flex-direction: column;
+                margin-top: 80px;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <header>
     <nav>
-        <div class="logo"><a href="index.html"><img src="assets/logo.png" alt="Stokrotka"></a></div>
+        <div class="logo">
+            <a href="index.html"><img src="assets/logo.png" alt="Stokrotka"></a>
+        </div>
         <ul>
             <li><a href="index.html#sklep">Powrót do sklepu</a></li>
         </ul>
     </nav>
 </header>
 
-<main class="product-page">
-<div class="product-container">
-    <img id="dynamic-img" src="" alt="">
-    <div class="product-info">
-        <h1 id="dynamic-name">Ładowanie...</h1>
-        <p id="dynamic-price" class="price"></p>
-        <p id="dynamic-desc"></p>
-        <button class="btn-main-large">DODAJ DO KOSZYKA</button>
+<main class="product-page-container">
+    <div class="product-image">
+        <img id="display-img" src="" alt="Produkt">
     </div>
-</div>
-        </div>
+    <div class="product-info">
+        <a href="index.html" class="back-link">← Wróć do oferty</a>
+        <h1 id="display-name">Ładowanie...</h1>
+        <div class="product-price" id="display-price">0 PLN</div>
+        <p class="product-description" id="display-desc">
+            Opis produktu ładowany dynamicznie...
+        </p>
+        <button class="btn-main" onclick="addToCartFromPage()">DODAJ DO KOSZYKA</button>
     </div>
 </main>
+
+<script>
+    // Baza danych produktów (musi być spójna z ID w URL na stronie głównej)
+    const productsDB = {
+        'letnie-harmonie': {
+            name: 'Bukiet "Letnie Harmonie"',
+            price: 210,
+            desc: 'Kompozycja pełna słońca i radości. Składa się z najświeższych kwiatów sezonowych w odcieniach żółci, pomarańczu i bieli. Idealny prezent na urodziny lub poprawę humoru.',
+            img: 'assets/bukiet1.jpg'
+        },
+        'dziki-ogrod': {
+            name: 'Kompozycja "Dziki Ogród"',
+            price: 180,
+            desc: 'Naturalna, lekko niesforna kompozycja w stylu rustykalnym. Wykorzystujemy w niej kwiaty polne, eukaliptus oraz delikatne dodatki, które nadają jej unikalny, leśny charakter.',
+            img: 'assets/bukiet2.jpg'
+        },
+        'rosina-alokazja': {
+            name: 'Roślina "Alokazja"',
+            price: 110,
+            desc: 'Egzotyczna roślina doniczkowa o spektakularnych liściach. Alokazja to symbol elegancji i nowoczesnego wnętrza. Wymaga jasnego stanowiska i regularnego zraszania.',
+            img: 'assets/bukiet3.jpg'
+        }
+    };
+
+    // Pobieranie ID z adresu (np. ?id=letnie-harmonie)
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+    const product = productsDB[productId];
+
+    // Wyświetlanie danych
+    if (product) {
+        document.getElementById('display-name').innerText = product.name;
+        document.getElementById('display-price').innerText = product.price + ' PLN';
+        document.getElementById('display-desc').innerText = product.desc;
+        document.getElementById('display-img').src = product.img;
+        document.title = product.name + " - Kwiaciarnia Stokrotka";
+    } else {
+        window.location.href = 'index.html'; // Przekierowanie jeśli produkt nie istnieje
+    }
+
+    // Funkcja dodawania do koszyka (localStorage)
+    function addToCartFromPage() {
+        let cart = JSON.parse(localStorage.getItem('stokrotkaCart')) || [];
+        cart.push({
+            name: product.name,
+            price: product.price
+        });
+        localStorage.setItem('stokrotkaCart', JSON.stringify(cart));
+        
+        // Animacja lub potwierdzenie
+        alert('Dodano ' + product.name + ' do koszyka!');
+    }
+</script>
 
 </body>
 </html>

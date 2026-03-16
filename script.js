@@ -1,22 +1,17 @@
 // --- 1. BAZA DANYCH PRODUKTÓW ---
+// Klucze muszą pasować do ID używanych w przyciskach/linkach
 const produkty = {
     'letnie-harmonie': {
         nazwa: 'Bukiet "Letnie Harmonie"',
-        cena: 210,
-        opis: 'Romantyczna kompozycja różowych goździków i eukaliptusa. Idealna na każdą okazję.',
-        img: 'assets/bukiet1.jpg'
+        cena: 210
     },
     'dziki-ogrod': {
         nazwa: 'Kompozycja "Dziki Ogród"',
-        cena: 180,
-        opis: 'Naturalny bukiet z rumiankiem w szklanym wazonie, przywołujący wspomnienie lata.',
-        img: 'assets/bukiet2.jpg'
+        cena: 180
     },
-    'alokazja': {
+    'rosina-alokazja': { // Poprawiono klucz, by pasował do HTML
         nazwa: 'Roślina "Alokazja"',
-        cena: 110,
-        opis: 'Egzotyczna roślina doniczkowa o głębokich zielonych liściach. Wyjątkowa ozdoba wnętrza.',
-        img: 'assets/bukiet3.jpg'
+        cena: 110
     }
 };
 
@@ -24,42 +19,51 @@ const produkty = {
 let cart = JSON.parse(localStorage.getItem('stokrotkaCart')) || [];
 
 function updateCartUI() {
+    // Dopasowano ID do tych z Twojego HTML (index.html)
     const cartCount = document.getElementById('cart-count');
-    const cartList = document.getElementById('cart-items-list');
+    const cartList = document.getElementById('cart-items'); // Było cart-items-list
     const cartTotal = document.getElementById('cart-total');
     
-    // Aktualizacja licznika
+    if (!cartCount || !cartList || !cartTotal) return;
+
     cartCount.innerText = cart.length;
-    
-    // Czyszczenie listy
     cartList.innerHTML = '';
     let total = 0;
 
-    cart.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `${item.nazwa} - ${item.cena} PLN <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer;">[x]</button>`;
-        cartList.appendChild(li);
-        total += item.cena;
-    });
+    if (cart.length === 0) {
+        cartList.innerHTML = '<li style="text-align:center; color:#999; padding:10px;">Koszyk jest pusty</li>';
+    } else {
+        cart.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.style.cssText = "display:flex; justify-content:space-between; margin-bottom:10px;";
+            li.innerHTML = `
+                <span>${item.nazwa}</span>
+                <span>
+                    <strong>${item.cena} PLN</strong>
+                    <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer; margin-left:10px;">✕</button>
+                </span>
+            `;
+            cartList.appendChild(li);
+            total += item.cena;
+        });
+    }
 
     cartTotal.innerText = total;
     localStorage.setItem('stokrotkaCart', JSON.stringify(cart));
 }
 
-function addToCart(productId) {
-    const produkt = produkty[productId];
-    if (produkt) {
-        cart.push(produkt);
-        updateCartUI();
-        // Opcjonalnie: otwórz koszyk po dodaniu
-        document.getElementById('cart-dropdown').classList.remove('hidden');
-    }
-}
+// Funkcja wywoływana bezpośrednio z przycisków w HTML
+window.addToCartDirect = function(name, price) {
+    cart.push({ nazwa: name, cena: price });
+    updateCartUI();
+    // Otwórz koszyk, żeby pokazać, że dodano produkt
+    document.getElementById('cart').classList.add('active');
+};
 
-function removeFromCart(index) {
+window.removeFromCart = function(index) {
     cart.splice(index, 1);
     updateCartUI();
-}
+};
 
 // --- 3. OBSŁUGA GALERII (LIGHTBOX) ---
 const lightbox = document.getElementById('lightbox');
@@ -68,44 +72,36 @@ const captionText = document.getElementById('caption');
 
 document.querySelectorAll('.gallery-item').forEach(image => {
     image.addEventListener('click', () => {
-        lightbox.style.display = 'flex';
-        lightboxImg.src = image.src;
-        captionText.innerHTML = image.alt;
+        if(lightbox) {
+            lightbox.style.display = 'flex';
+            lightboxImg.src = image.src;
+            captionText.innerHTML = image.alt;
+        }
     });
 });
 
 document.querySelector('.close-lightbox')?.addEventListener('click', () => {
-    lightbox.style.display = 'none';
+    if(lightbox) lightbox.style.display = 'none';
 });
 
 // --- 4. INICJALIZACJA I EVENTY ---
 document.addEventListener('DOMContentLoaded', () => {
     updateCartUI();
 
-    // Toggle koszyka
     const cartButton = document.getElementById('cart-button');
-    const cartDropdown = document.getElementById('cart-dropdown');
+    const cartDropdown = document.getElementById('cart'); // Poprawiono z cart-dropdown na cart
     
-    cartButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        cartDropdown.classList.toggle('hidden');
-    });
-
-    // Zamykanie koszyka po kliknięciu poza nim
-    window.addEventListener('click', () => {
-        cartDropdown.classList.add('hidden');
-    });
-
-    cartDropdown.addEventListener('click', (e) => e.stopPropagation());
-
-    // Podpięcie przycisków "Dodaj do koszyka" na stronie głównej
-    // Zakładamy, że przyciski są w tej samej kolejności co w HTML
-    const addButtons = document.querySelectorAll('.btn-add');
-    const productKeys = Object.keys(produkty);
-
-    addButtons.forEach((btn, index) => {
-        btn.addEventListener('click', () => {
-            addToCart(productKeys[index]);
+    if (cartButton && cartDropdown) {
+        cartButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            cartDropdown.classList.toggle('active'); // Zmieniono z hidden na active
         });
-    });
+
+        // Zamykanie koszyka po kliknięciu poza nim
+        window.addEventListener('click', () => {
+            cartDropdown.classList.remove('active');
+        });
+
+        cartDropdown.addEventListener('click', (e) => e.stopPropagation());
+    }
 });
